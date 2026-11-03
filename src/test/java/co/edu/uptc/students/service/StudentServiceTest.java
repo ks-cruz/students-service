@@ -41,6 +41,9 @@ class StudentServiceTest {
     @Mock
     private ProgramRepository programRepository;
 
+    @Mock
+    private AzureBlobStorageService azureBlobStorageService;
+
     private StudentService studentService;
 
     private Program program;
@@ -48,7 +51,7 @@ class StudentServiceTest {
 
     @BeforeEach
     void setUp() {
-        studentService = new StudentService(studentRepository, programRepository);
+        studentService = new StudentService(studentRepository, programRepository, azureBlobStorageService);
         program = new Program(1L, "Ingeniería de Sistemas", "IS-01");
         student = new Student(1L, "Laura", "Gomez", "laura.gomez@uptc.edu.co", program);
     }

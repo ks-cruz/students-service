@@ -114,4 +114,37 @@ public class StudentController {
         studentService.delete(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping(value = "/{id}/photo", consumes = org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "Upload student photo", description = "Uploads a JPG or PNG photo (max 2 MB) to Azure Blob Storage and stores metadata")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Photo uploaded successfully",
+                    content = @Content(schema = @Schema(implementation = StudentResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Invalid file or exceeds 2 MB limit"),
+            @ApiResponse(responseCode = "404", description = "Student not found")
+    })
+    public ResponseEntity<StudentResponse> uploadPhoto(
+            @PathVariable Long id,
+            @org.springframework.web.bind.annotation.RequestParam("file") org.springframework.web.multipart.MultipartFile file) {
+        StudentResponse response = studentService.uploadPhoto(id, file);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/{id}/photo")
+    @Operation(summary = "Get student photo URL", description = "Generates and returns a temporary signed URL (SAS Token) to access the photo")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Photo URL generated"),
+            @ApiResponse(responseCode = "404", description = "Student or photo not found")
+    })
+    public ResponseEntity<java.util.Map<String, String>> getPhotoUrl(@PathVariable Long id) {
+        String url = studentService.getPhotoSasUrl(id);
+        return ResponseEntity.ok(java.util.Map.of("photoUrl", url));
+    }
+
+    @DeleteMapping("/{id}/photo")
+    @Operation(summary = "Delete student photo", description = "Deletes photo from Azure Blob Storage and clears metadata")
+    public ResponseEntity<Void> deletePhoto(@PathVariable Long id) {
+        studentService.deletePhoto(id);
+        return ResponseEntity.noContent().build();
+    }
 }

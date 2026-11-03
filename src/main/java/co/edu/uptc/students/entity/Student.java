@@ -32,6 +32,21 @@ public class Student {
     @JoinColumn(name = "program_id", nullable = false)
     private Program program;
 
+    @Column(name = "photo_blob_name")
+    private String photoBlobName;
+
+    @Column(name = "photo_original_name")
+    private String photoOriginalName;
+
+    @Column(name = "photo_content_type")
+    private String photoContentType;
+
+    @Column(name = "photo_size")
+    private Long photoSize;
+
+    @Column(name = "photo_uploaded_at")
+    private java.time.LocalDateTime photoUploadedAt;
+
     public Student() {
     }
 
@@ -81,5 +96,45 @@ public class Student {
 
     public void setProgram(Program program) {
         this.program = program;
+    }
+
+    public String getPhotoBlobName() {
+        return photoBlobName;
+    }
+
+    public void setPhotoBlobName(String photoBlobName) {
+        this.photoBlobName = photoBlobName;
+    }
+
+    public String getPhotoOriginalName() {
+        return photoOriginalName;
+    }
+
+    public void setPhotoOriginalName(String photoOriginalName) {
+        this.photoOriginalName = photoOriginalName;
+    }
+
+    public String getPhotoContentType() {
+        return photoContentType;
+    }
+
+    public void setPhotoContentType(String photoContentType) {
+        this.photoContentType = photoContentType;
+    }
+
+    public Long getPhotoSize() {
+        return photoSize;
+    }
+
+    public void setPhotoSize(Long photoSize) {
+        this.photoSize = photoSize;
+    }
+
+    public java.time.LocalDateTime getPhotoUploadedAt() {
+        return photoUploadedAt;
+    }
+
+    public void setPhotoUploadedAt(java.time.LocalDateTime photoUploadedAt) {
+        this.photoUploadedAt = photoUploadedAt;
     }
 }
